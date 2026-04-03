@@ -6,16 +6,10 @@ dotenv.config();
 
 import connectDB from "./config/mongodb.js";
 connectDB();
+import userRouter from "./routes/userRoutes.js";
 
-app.get("/users",(req,res)=>{
-    const {username,password}=req.body
 
-    // add to db
-
-    res.json({
-        message:"user created successfully"
-    })
-})
+app.use("/api/v1/user",userRouter);
 
 app.listen(3000,()=>{
     console.log("app listening at the port 3000")
