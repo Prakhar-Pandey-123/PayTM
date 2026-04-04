@@ -8,7 +8,7 @@ const balanceSchema=new mongoose.Schema({
         required:true
     },
     balance:{
-        type:Double,
+        type:Number,
         default:0
     }
 })

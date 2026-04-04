@@ -3,6 +3,7 @@ import express from "express"
 import jwt from "jsonwebtoken"
 import userModel from "../models/User";
 import bcrypt from "bcrypt";
+import balanceModel from "../models/Balance";
 // hc v/s 
 const signup=async (req,res)=>{
    try{
@@ -26,6 +27,12 @@ const signup=async (req,res)=>{
         password:hashed,
         username
     })
+    
+    await balanceModel.create({
+        userId:user._id,
+        balance:1+Math.random()*1000
+    })
+
     return res.status(200).json({
             success:true,
             message:"user created successfully"

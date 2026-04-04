@@ -13,6 +13,7 @@ import userRouter from "./routes/userRoutes.js";
 
 
 app.use("/api/v1/user",userRouter);
+app.use("/api/v1/balance",balanceRouter);
 
 app.listen(3000,()=>{
     console.log("app listening at the port 3000")

@@ -1,7 +1,7 @@
 import express from "express"
 import jwt from "jsonwebtoken"
 
-const auth=(req,res,next)=>{
+const check=(req,res,next)=>{
     try{
         const headers=req.headers.authorization;
     if(!headers || !headers.startsWith("Bearer ") ){
@@ -21,4 +21,4 @@ const auth=(req,res,next)=>{
         })
     }
 }
-export default auth
+export default check
