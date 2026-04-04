@@ -4,6 +4,9 @@ const app=express();
 import dotenv from "dotenv"
 dotenv.config();
 
+app.use(cors());
+app.use(express.json());
+
 import connectDB from "./config/mongodb.js";
 connectDB();
 import userRouter from "./routes/userRoutes.js";

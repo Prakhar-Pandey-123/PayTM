@@ -86,4 +86,4 @@ const login=async(req,res)=>{
     }
 }
 
-export {signup}
+export {signup,login}
