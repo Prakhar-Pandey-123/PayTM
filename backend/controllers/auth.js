@@ -81,6 +81,7 @@ const login=async(req,res)=>{
         success:true,
         message:"Logged in successfully",
         username:username,
+        firstname:user.firstname,
         token:token
     })
     }

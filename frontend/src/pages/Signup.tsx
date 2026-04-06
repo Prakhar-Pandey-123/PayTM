@@ -3,7 +3,7 @@ import Button from "../components/Button"
 import Heading from "../components/Heading"
 import Inputbox from "../components/Inputbox"
 import Linker from "../components/Linker"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 const Signup=()=>{
@@ -33,6 +33,29 @@ const Signup=()=>{
             toast.error(res.data.message);
         }
     }
+
+     const check=async()=>{
+        if(localStorage.getItem("token"))
+        {
+          navigate("/dashboard");
+        }
+        const res=await axios.post("http://localhost:3000/api/v1/user/me",
+          {},
+        {
+          headers:{
+              Authorization:`Bearer ${localStorage.getItem("token")}`
+            }
+        }
+      )
+      if(res.data.success===true){
+        navigate("/dashboard");
+      }
+      
+      
+    }
+    useEffect(()=>{
+        check()
+    },[])
 
     return(
         

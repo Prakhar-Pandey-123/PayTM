@@ -1,7 +1,7 @@
 import Heading from "../components/Heading"
 import Inputbox from "../components/Inputbox"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
 import axios from "axios"
 import toast from "react-hot-toast"
@@ -12,6 +12,31 @@ const Send=()=>{
     const [searchParams]=useSearchParams();
     const userid=searchParams.get("userId");
     const name:string|null=searchParams.get("name");
+
+     const check=async()=>{
+      try{
+        if(!localStorage.getItem("token"))
+        {
+          navigate("/login");
+        }
+        const res=await axios.post("http://localhost:3000/api/v1/user/me",
+          {},
+        {
+          headers:{
+              Authorization:`Bearer ${localStorage.getItem("token")}`
+            }
+        }
+      )
+    //   console.log(res);
+      if(res.data.success===false){
+        navigate("/login");
+      }
+      }
+      catch(e){
+        navigate("/login");
+
+      }
+    }
 
     async function fn(){
         try{
@@ -43,6 +68,9 @@ const Send=()=>{
             navigate("/dashboard");
         }
     }
+    useEffect(()=>{
+        check()
+    },[])
     
 
     return(
@@ -65,8 +93,8 @@ const Send=()=>{
             <div className="w-full bg-green-600 rounded-lg cursor-pointer" onClick={()=>{
             fn()
         }}>
-            <div className="flex mx-auto  text-white items-center rounded-md h-10 w-fit m-2">
-        <button className="h-2/3 "
+            <div className="flex mx-auto  text-white items-center rounded-md h-10 w-fit m-2 cursor-pointer">
+        <button className="h-2/3 cursor-pointer"
         >
            Initiate Transfer
         </button>

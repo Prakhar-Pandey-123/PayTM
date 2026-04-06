@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
     const navigate=useNavigate();
-    const username:any=localStorage.getItem("username");
+    const username = localStorage.getItem("username") || "User";
+    const firstname = localStorage.getItem("firstname") || "User"; // default
     const [bal,setBal]=useState("0");
     const [arr,setarr]=useState([]);
     const [search,setSearch]=useState("");
@@ -34,16 +35,42 @@ const Dashboard = () => {
             params:{
                 filter:`${search}`
             }            
-        },)
+        })
         // console.log(res);
         setarr(res.data.users);
+    }
+    const check=async()=>{
+      try{
+        if(!localStorage.getItem("token"))
+        {
+          navigate("/login");
+        }
+        const res=await axios.post("http://localhost:3000/api/v1/user/me",
+          {},
+        {
+          headers:{
+              Authorization:`Bearer ${localStorage.getItem("token")}`
+            }
+        }
+      )
+      // console.log(res);
+      if(res.data.success===false){
+        navigate("/login");
+      }
+      }
+      catch(e){
+        navigate("/login");
+
+      }
     }
     useEffect(()=>{
         getusers();
     },[search]);
+
     useEffect(()=>{
+      check();
        fn()
-       getusers()
+      //  getusers()
     },[]);
 
 
@@ -55,10 +82,17 @@ const Dashboard = () => {
         <h1 className="text-2xl font-bold cursor-pointer">Payments App</h1>
 
         <div className="flex items-center gap-3">
-          <span className="text-gray-700">Hello, {username}</span>
+          <span className="text-gray-700">Hello, {firstname}</span>
           <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center font-semibold">
             {username[0].toUpperCase()}
           </div>
+          <button className="border-2 p-1 rounded-md bg-red-200 cursor-pointer " onClick={()=>{
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            navigate("/login");
+          }}>
+            Log Out
+          </button>
         </div>
       </div>
 

@@ -80,4 +80,27 @@ const searchUser=async(req,res)=>{
     }
 }
 
-export {updateInfo,searchUser}
+const me=(req,res)=>{
+    try{
+        const id=req.user.id;
+    if(id){
+        return res.status(200).json({
+            message:"good to go",
+            success:true
+        })
+    }else {
+        return res.status(400).json({
+            message:"cant access this page",
+            success:false
+        })
+    }
+    }
+    catch(e){
+        return res.status(400).json({
+            message:"cant access this page",
+            success:false
+        })
+    }
+}
+
+export {updateInfo,searchUser,me}
