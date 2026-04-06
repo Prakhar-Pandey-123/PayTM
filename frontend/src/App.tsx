@@ -3,11 +3,13 @@ import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
 import Send from "./pages/Send"
+import {Toaster} from "react-hot-toast"
 
 function App() {
   return (
     <div>
       <BrowserRouter>
+      <Toaster />
       <Routes>
         <Route path="/signup" element={
           <Signup></Signup>

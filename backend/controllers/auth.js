@@ -1,9 +1,9 @@
 
 import express from "express"
 import jwt from "jsonwebtoken"
-import userModel from "../models/User";
+import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
-import balanceModel from "../models/Balance";
+import balanceModel from "../models/Balance.js";
 // hc v/s 
 const signup=async (req,res)=>{
    try{
@@ -79,7 +79,7 @@ const login=async(req,res)=>{
     });
     return res.status(200).json({
         success:true,
-        message:"signed in",
+        message:"Logged in successfully",
         username:username,
         token:token
     })

@@ -1,5 +1,5 @@
-import userModel from "../models/User";
-import balanceModel from "../models/Balance";
+import userModel from "../models/User.js";
+import balanceModel from "../models/Balance.js";
 import mongoose from "mongoose";
 
 const checkBalance=async(req,res)=>{

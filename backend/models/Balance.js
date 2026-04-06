@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import userModel from "./User";
+import userModel from "./User.js";
 
 const balanceSchema=new mongoose.Schema({
     userId:{

@@ -62,6 +62,11 @@ const searchUser=async(req,res)=>{
             }
         ]
     }).select("username firstname lastname")
+    if(!users){
+        return res.status(400).json({
+            message:"No user found !"
+        })
+    }
     return res.status(200).json({
         users:users
     })

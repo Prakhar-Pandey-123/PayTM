@@ -1,15 +1,18 @@
 import express from "express"
 const app=express();
 
+
 import dotenv from "dotenv"
 dotenv.config();
 
+import cors from "cors"
 app.use(cors());
 app.use(express.json());
 
 import connectDB from "./config/mongodb.js";
 connectDB();
 import userRouter from "./routes/userRoutes.js";
+import balanceRouter from "./routes/balanceRoutes.js";
 
 
 app.use("/api/v1/user",userRouter);
