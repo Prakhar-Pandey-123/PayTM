@@ -12,7 +12,7 @@ const Dashboard = () => {
     const [search,setSearch]=useState("");
 
     async function fn(){
-        console.log(localStorage.getItem("token"));
+        // console.log(localStorage.getItem("token"));
          const res=await axios.get("http://localhost:3000/api/v1/balance/getBalance",{
             headers:{
                 authorization:`Bearer ${localStorage.getItem("token")}`
@@ -24,14 +24,18 @@ const Dashboard = () => {
          setBal(result);
     }
     async function getusers(){
-        console.log(search)
+        // console.log(search)
         const res=await axios.get("http://localhost:3000/api/v1/user/searchUser",
-        {
+          {
+            headers:{
+              Authorization:`Bearer ${localStorage.getItem("token")}`
+            }
+          ,
             params:{
                 filter:`${search}`
             }            
-        })
-        console.log(res);
+        },)
+        // console.log(res);
         setarr(res.data.users);
     }
     useEffect(()=>{
@@ -100,7 +104,7 @@ const Dashboard = () => {
                 {/* Right */}
                 <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition cursor-pointer"
                 onClick={()=>{
-                    navigate(`/send?userId=${user._id}&name=${user.name}`)
+                    navigate(`/send?userId=${user._id}&name=${user.firstname}`)
                 }}
                 >
                   Send Money

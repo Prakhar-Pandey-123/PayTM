@@ -11,6 +11,7 @@ function App() {
       <BrowserRouter>
       <Toaster />
       <Routes>
+        {/* <Route></Route> */}
         <Route path="/signup" element={
           <Signup></Signup>
         }></Route>

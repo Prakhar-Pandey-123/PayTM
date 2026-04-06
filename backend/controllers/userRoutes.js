@@ -49,7 +49,9 @@ const updateInfo=async(req,res)=>{
 const searchUser=async(req,res)=>{
     try{
         const filter=req.query.filter || "";
+        const id=req.user.id;
     const users=await userModel.find({
+        _id:{$ne:id},
         $or:[
             {
                 firstname:{

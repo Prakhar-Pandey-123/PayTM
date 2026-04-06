@@ -42,15 +42,23 @@ try {
   const { amount, to } = req.body;
 
   const account = await balanceModel.findOne({ userId: req.user.id }).session(session);
+
   if (!account || account.balance < amount) {
     await session.abortTransaction();
-    return res.status(400).json({ message: "Invalid input" });
+
+    return res.status(400).json({ 
+      message: "Invalid input",
+      success:false
+    });
   }
 
   const toAccount = await balanceModel.findOne({ userId: to }).session(session);
   if (!toAccount) {
     await session.abortTransaction();
-    return res.status(400).json({ message: "Receiver not found" });
+    return res.status(400).json({
+       message: "Receiver not found" ,
+       success:false
+      });
   }
 
   await balanceModel.updateOne(
@@ -66,9 +74,13 @@ try {
   await session.commitTransaction();
   res.json({ success: true });
 
-} catch (err) {
+} 
+catch (err) {
   await session.abortTransaction();
-  res.status(500).json({ success: false });
+  return res.status(500).json({
+     success: false,
+    message:"Can't perform the action"
+   });
 } finally {
   session.endSession();
 }

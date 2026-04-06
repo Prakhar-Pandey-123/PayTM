@@ -3,17 +3,45 @@ import Inputbox from "../components/Inputbox"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import axios from "axios"
+import toast from "react-hot-toast"
 
 const Send=()=>{
     const [number,setNumber]=useState("0");
     const navigate=useNavigate();
     const [searchParams]=useSearchParams();
     const userid=searchParams.get("userId");
-    const name=searchParams.get("name");
-    function fn(){
-        console.log(number);
+    const name:string|null=searchParams.get("name");
+
+    async function fn(){
+        try{
+            console.log(number);
         console.log(userid);
-        console.log(name);
+        const res=await axios.post("http://localhost:3000/api/v1/balance/transfer",{
+                to:userid,
+                amount:number
+            }
+        ,{
+            headers:{
+                Authorization:`Bearer ${localStorage.getItem("token")}`
+            }
+        })
+        console.log(res);
+        if(res.data.success){
+            toast.success("Transaction Successful")
+            
+        }
+        else{
+            toast.error(res.data.message);
+        }
+        }
+        catch(e){
+             toast.error("Error in sending the money");
+             
+        }
+        finally{
+            navigate("/dashboard");
+        }
     }
     
 
@@ -24,8 +52,10 @@ const Send=()=>{
             <Heading title="Send Money" subtitle=""></Heading>
             <div className="flex mx-auto items-center gap-5 mb-4">
                 <div className="bg-green-600 rounded-full w-10 h-10 flex items-center ">
+                    <div className="mx-auto font-bold text-2xl">{
+                    name[0].toUpperCase()}</div>
                 </div>
-                <div className="text-2xl font-medium">Friend's Name</div>
+                <div className="text-2xl font-medium">{name?.toUpperCase()}</div>
             </div>
 
             <Inputbox title="Amount (in Rs.)" placeholder="Enter amount" 
@@ -37,9 +67,6 @@ const Send=()=>{
         }}>
             <div className="flex mx-auto  text-white items-center rounded-md h-10 w-fit m-2">
         <button className="h-2/3 "
-            onClick={()=>{
-                fn()
-            }}
         >
            Initiate Transfer
         </button>
