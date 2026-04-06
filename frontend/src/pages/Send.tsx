@@ -4,7 +4,7 @@ import Inputbox from "../components/inputBox"
 const Send=()=>{
     return(
         <div className="flex h-screen justify-center items-center">
-        <div className="border-2 mx-auto  flex-col  p-4 rounded-lg items-center justify-center w-1/2 ">
+        <div className="border-2 mx-auto  flex-col  p-4 rounded-lg items-center justify-center w-1/4 ">
     
             <Heading title="Send Money" subtitle=""></Heading>
             <div className="flex mx-auto items-center gap-5 mb-4">
@@ -30,9 +30,6 @@ const Send=()=>{
         </button>
     </div> 
             </div>
-
-
-
         </div>
         </div>
     )
